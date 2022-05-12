@@ -16,8 +16,8 @@ not_sure_labels = ["not sure"]
 sessions = ["greeting", "work_exp", "tech_skill", "bye"]
 dont_understand_dict = {"greeting":0, "work_exp":0, "tech_skill":0, "bye":0}
 repeat_dict = {"greeting":0, "work_exp":0, "tech_skill":0, "bye":0}
-# topics_asked = {"PHP":0, "RESTful API":0, "OOP":0, "multithreading":0, "Spring Framework":0, "e-Payment":0, "nodejs": 0 ,"web/mobile applications":0, "Jenkins":0, "SQL":0}
-topics_asked = {"SQL":0, "Python":0, "Data Scraping":0, "Machine Learning":0, "Database":0}
+topics_asked = {"PHP":0, "RESTful API":0, "O O P":0, "multithreading":0, "Spring Framework":0, "e-Payment":0, "nodejs": 0 ,"web/mobile applications":0, "Jenkins":0, "SQL":0}
+# topics_asked = {"SQL":0, "Python":0, "Data Scraping":0, "Machine Learning":0, "Database":0}
 
 
 def json_to_client(type, url, photo_required = "false"):
@@ -70,7 +70,7 @@ def greeting(cs, scoringModel, name):
     # interviwee_intro - response
     logging.info(f"waiting interviwee_intro - response - from clinet")
     
-    intro_chatbot_response,_,photoURL = scoringModel.giveResponse(interviwee_intro_q, current_session, intro_labels, get_topics_intro)
+    intro_chatbot_response,_,photoURL = scoringModel.giveResponse(interviwee_intro_q, current_session, intro_labels, get_topics_intro, ignore_scores = True)
 
     intro_response_url = google_tts(intro_chatbot_response)
     print("interviwee_intro - response (checked) ->",intro_chatbot_response)
@@ -144,13 +144,14 @@ def chatbot_start(cs, addr):
     logging.info(f"Client connected from {addr}")
     with cs:
         try:
-            # resume_id = '62036f5a00814558da9ff80b' # test
-            # resume_id = '626fedead149cdb9f17bd9f3' # TIN WAI MING
-            resume_id = '62700da3054b9d91f6e204ee' # HOI KING FAI
-            # job_req = {'skills': ["PHP", "RESTful API", "oop", "multithreading", "Spring Framework", "e-Payment", "nodejs", "web/mobile applications", "Jenkins", "SQL"] ,'edu': "degree", 'exp': "0 years"}
-            job_req = {'skills': ["SQL", "Python", "Data Scraping", "Machine Learning", "Database"] ,'edu': "degree", 'exp': "0 years"}
-
+            resume_id = '62036f5a00814558da9ff80b' # test
             # resume_id = '626fd427d149cdb9f17bd9f2' # Ho
+            # resume_id = '626fedead149cdb9f17bd9f3' # TIN WAI MING
+            # resume_id = '62700da3054b9d91f6e204ee' # HOI KING FAI
+            # resume_id = '6271253602d55e08e061714a' # FD
+
+            job_req = {'skills': ["PHP", "RESTful API", "O O P", "multithreading", "Spring Framework", "e-Payment", "nodejs", "web/mobile applications", "Jenkins", "SQL"] ,'edu': "degree", 'exp': "0 years"}
+            # job_req = {'skills': ["SQL", "Python", "Data Scraping", "Machine Learning", "Database"] ,'edu': "degree", 'exp': "0 years"}
             
             report = gen_report(resume_id, job_req)
             logging.info(f"resume id: {resume_id}")

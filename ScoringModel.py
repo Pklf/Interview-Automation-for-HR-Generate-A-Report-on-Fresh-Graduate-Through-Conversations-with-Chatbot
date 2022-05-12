@@ -49,8 +49,12 @@ class ScoringModel(object):
             if ignore_scores:
                 return ""
             return dont_understand_text
-        if (any(x in topics['labels'][0:2] for x in repeat_labels) and any(x in topics['labels'][0:2] for x in not_sure_labels)) or any(x in topics['labels'][0] for x in repeat_labels):
-            if topics['labels'][0] in repeat_labels and topics['scores'][0] > 0.5:
+        if (any(x in topics['labels'][0:2] for x in repeat_labels) and any(x in topics['labels'][0:2] for x in not_sure_labels)):
+            if topics['scores'][1] > 0.7:
+                return repeat_text
+            return ""
+        elif any(x in topics['labels'][0] for x in repeat_labels):
+            if topics['labels'][0] in repeat_labels:
                 return repeat_text
             return ""
         return ""
@@ -434,14 +438,18 @@ class ScoringModel(object):
                 # if the label is not sure
                 if topics['labels'][i] in not_sure_labels:
                     print('Interviewee Not sure')
+                    break
                 # if the label is repeat
                 elif topics['labels'][i] in repeat_labels:
                     print('Ask for repeat') 
+                    break
                 # if the confidence is less than 0.4
                 elif topics['scores'][i] < 0.4:
                     print("Chatbot doesn't understand topic")
+                    break
                 elif self.topics_asked[topics['labels'][i]] < 2:
                     question = Question(-1, random.choice(questions_text).format(topic= topics['labels'][i]))
                     question.topic = topics['labels'][i]
                     questions.append(question)
                     self.topics_asked[topics['labels'][i]] += 1
+                    break

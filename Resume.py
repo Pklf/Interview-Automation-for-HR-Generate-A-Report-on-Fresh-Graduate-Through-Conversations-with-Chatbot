@@ -96,6 +96,8 @@ class Education:
     def __repr__(self):
         return f"<Education> {self.title}, {self.organization}, {self.level}, {self.grade}, {self.startDate}, {self.endDate}"
     def toDict(self):
+        startDate = ""
+        endDate = ""
         if self.startDate:
             startDate = self.startDate.strftime("%m/%d/%Y, %H:%M:%S")
         if self.endDate:
